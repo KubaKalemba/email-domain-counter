@@ -60,7 +60,6 @@ func sortMapByDomain(inputMap map[string]int) []KeyValue {
 		domainCounts = append(domainCounts, KeyValue{key, value})
 	}
 
-	// Sort the slice by values
 	sort.Slice(domainCounts, func(i, j int) bool {
 		return domainCounts[i].Value > domainCounts[j].Value
 	})
