@@ -37,6 +37,9 @@ func countEmailDomains(records [][]string) ([]KeyValue, error) {
 		if len(record) > 1 {
 			email := record[2]
 			domain := extractEmailDomain(email)
+			if domain == "" {
+				continue
+			}
 			emailDomainCount[domain]++
 		}
 	}
