@@ -59,7 +59,7 @@ func countEmailDomains(records [][]string) ([]KeyValue, error) {
 func extractEmailDomain(email string) string {
 	parts := strings.Split(email, "@")
 	if len(parts) == 2 {
-		return parts[1]
+		return strings.ToLower(parts[1])
 	}
 	return ""
 }
