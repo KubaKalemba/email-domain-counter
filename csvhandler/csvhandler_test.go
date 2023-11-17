@@ -10,6 +10,13 @@ import (
 
 func TestReadAndCountDomains(t *testing.T) {
 
+	/* test data:
+	Name,Surname,Email
+	jan,kowalski,jan@gmail.com
+	ewa,kowalska,ewa@gmail.com
+	tom,kowalski,tom@tlen.pl
+	*/
+
 	currentDir, err := filepath.Abs(".")
 	if err != nil {
 		log.Fatal(err)
