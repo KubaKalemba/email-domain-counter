@@ -13,38 +13,26 @@ type KeyValue struct {
 	Value int
 }
 
-func ReadAndCountDomains(filePath string) []KeyValue {
-	records := ReadCsvFile(filePath)
-
+func ReadAndCountDomains(f *os.File) []KeyValue {
+	records := ReadCsvFile(f)
 	domainCounts, err := countEmailDomains(records)
 	if err != nil {
 		return nil
 	}
-
 	return domainCounts
-
 }
 
-func ReadCsvFile(filePath string) [][]string {
-	f, err := os.Open(filePath)
-	if err != nil {
-		log.Fatal("Unable to read input file "+filePath, err)
-	}
-	defer f.Close()
-
+func ReadCsvFile(f *os.File) [][]string {
 	csvReader := csv.NewReader(f)
 	records, err := csvReader.ReadAll()
 	if err != nil {
-		log.Fatal("Unable to parse file as CSV for "+filePath, err)
+		log.Fatal("Unable to parse file as CSV for ", err)
 	}
-
 	return records
 }
 
 func countEmailDomains(records [][]string) ([]KeyValue, error) {
-
 	emailDomainCount := make(map[string]int)
-
 	for _, record := range records {
 		if len(record) > 1 {
 			email := record[2]
@@ -52,7 +40,6 @@ func countEmailDomains(records [][]string) ([]KeyValue, error) {
 			emailDomainCount[domain]++
 		}
 	}
-
 	return sortMapByDomain(emailDomainCount), nil
 }
 
@@ -69,10 +56,8 @@ func sortMapByDomain(inputMap map[string]int) []KeyValue {
 	for key, value := range inputMap {
 		domainCounts = append(domainCounts, KeyValue{key, value})
 	}
-
 	sort.Slice(domainCounts, func(i, j int) bool {
 		return domainCounts[i].Value > domainCounts[j].Value
 	})
-
 	return domainCounts
 }
